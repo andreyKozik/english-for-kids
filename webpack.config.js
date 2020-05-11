@@ -1,6 +1,7 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyWebpackPlugin = require("copy-webpack-plugin"); 
+const webpack = require("webpack");
 
 module.exports = {
   mode: "production",
@@ -14,7 +15,7 @@ module.exports = {
         exclude: [/node_modules/], //исключение что не будет обрабатываться этим лоадером
       },
       {
-        test: /\.(png|jpg|jpeg|gif|ico|svg)$/,
+        test: /\.(png|jpg|jpeg|gif|ico|svg|eps)$/,
         use: [
           {
             loader: "file-loader", //какой лоадер используется
@@ -47,6 +48,16 @@ module.exports = {
         ],
       },
       {
+        test: /\.(mp3)$/,
+        use: [{
+          loader: 'file-loader',
+          options: {
+            outputPath: 'sounds',
+            name: '[name].[ext]'
+          }
+        }]
+      },
+      {
         test: /\.(s[ca]ss)$/, //может поддердивать scss and sass
         use: [
           MiniCssExtractPlugin.loader,
@@ -71,7 +82,14 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: "style.css",
     }),
-    new CopyWebpackPlugin([{ from: "src/assets/img", to: `assets/img` }]),
+    new CopyWebpackPlugin([
+      { from: "src/assets/img", to: `assets/img` },
+      { from: "src/assets/sounds", to: `assets/sounds`}
+    ]),
+    new webpack.DefinePlugin({
+      API_KEY: JSON.stringify(process.env.API_KEY),
+      APP_ENV: JSON.stringify(process.env.APP_ENV)
+    })
   ],
 
   devServer: {

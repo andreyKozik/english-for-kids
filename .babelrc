@@ -19,5 +19,6 @@
   ],
 
   //установка плагинов по одному
-  "plugins": ["@babel/transform-template-literals"]
+  "plugins": ["@babel/transform-template-literals", "@babel/plugin-transform-runtime"]
+  
 }
