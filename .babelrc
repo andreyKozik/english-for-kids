@@ -1,0 +1,24 @@
+{
+  //установка всех плагиов для поддержания свежей версии JS
+  "presets": [
+    [
+      "@babel/env",
+      {
+        "corejs": 3, // нужно написать версию которая будет использоваться желательно последнюю
+        "useBuiltIns": "usage", //режим в котором будет работь corejs, usage - загружает только нужные полифилы для работы в указанныз браузерах
+        "debug": true,  //Выводит в консоль  какие версии браузеров будут поддерживаться
+        "modules": false, // фдаг false означает что мы будем использовать вместо стандартного require  будет import но для этого нужен webpack
+        "targets": [  //обьект с настройками для этого пресета
+          "last 2 chrome versions",
+          "last 2 firefox versions",
+          "last 10 edge versions"
+        ]
+      }
+    ],
+      "@babel/react"
+  ],
+
+  //установка плагинов по одному
+  "plugins": ["@babel/transform-template-literals", "@babel/plugin-transform-runtime"]
+  
+}
